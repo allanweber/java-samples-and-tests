@@ -1,0 +1,8 @@
+server:
+  ssl:
+    enabled: true
+    key-store: classpath:allanweber.p12
+    key-store-password: 123456
+    key-store-type: pkcs12
+    key-alias: allanweber
+  port: 8443
