@@ -13,18 +13,25 @@ public class HomeController {
 
     @GetMapping("/")
     public Mono<ResponseEntity<String>> home() {
-        return Mono.just(ok("Hello World!")).name("hello").metrics();
+        return doSomething()
+                .map(mapper -> ok(mapper))
+                .name("hello").metrics();
     }
 
     @GetMapping("/exception")
     public Mono<ResponseEntity<String>> excMono() {
-        return getResponse().name("hello").metrics()
-                .onErrorResume(throwable -> Mono.error(new RuntimeException(throwable.getMessage())))
-                .map(mapper -> ok(mapper));
+        return doSomething()
+                .flatMap(this::doSomethingElse)
+                .map(mapper -> ok(mapper))
+                .name("hello").metrics();
     }
 
-    private Mono<String> getResponse() {
-        return doSomething().flatMap(mapper -> doSomethingElse(mapper));
+    @GetMapping("/another-exception")
+    public Mono<ResponseEntity<String>> anotherExcMono() {
+        return doSomething()
+                .flatMap(this::doSomethingElseElse)
+                .map(mapper -> ok(mapper))
+                .name("hello").metrics();
     }
 
     private Mono<String> doSomething() {
@@ -33,5 +40,9 @@ public class HomeController {
 
     private Mono<String> doSomethingElse(String arg) {
         throw new RuntimeException("Exception");
+    }
+
+    private Mono<String> doSomethingElseElse(String arg) {
+        throw new IllegalArgumentException("Exception");
     }
 }
