@@ -16,3 +16,13 @@ public static void main(String[] args) {
   Hooks.onOperatorDebug();
  }
 ```
+
+Example of metrics with name and tags
+
+```java
+doSomething()
+    .map(mapper -> ok(mapper))
+    .name("hello")
+    .tag("key", "value")
+    .metrics();
+```

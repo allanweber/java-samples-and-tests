@@ -15,7 +15,9 @@ public class HomeController {
     public Mono<ResponseEntity<String>> home() {
         return doSomething()
                 .map(mapper -> ok(mapper))
-                .name("hello").metrics();
+                .name("hello")
+                .tag("key", "value")
+                .metrics();
     }
 
     @GetMapping("/exception")
@@ -23,7 +25,8 @@ public class HomeController {
         return doSomething()
                 .flatMap(this::doSomethingElse)
                 .map(mapper -> ok(mapper))
-                .name("hello").metrics();
+                .name("hello")
+                .metrics();
     }
 
     @GetMapping("/another-exception")
