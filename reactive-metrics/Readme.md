@@ -1,5 +1,7 @@
 # Read Me First
 
+## Endpoints
+
 <http://localhost:8080/health>
 
 <http://localhost:8080/metrics>
@@ -10,6 +12,8 @@
 
 <http://localhost:8080/metrics/hello.subscribed>
 
+## Java Hook to batter log visualization
+
 ```java
 public static void main(String[] args) {
   SpringApplication.run(ReactiveMetricsApplication.class, args);
@@ -17,7 +21,7 @@ public static void main(String[] args) {
  }
 ```
 
-Example of metrics with name and tags
+## Example of metrics with name and tags
 
 ```java
 doSomething()
@@ -26,3 +30,15 @@ doSomething()
     .tag("key", "value")
     .metrics();
 ```
+
+## Run prometheus
+
+```bash
+cd prometheus
+
+chmod +x ./prometheus.sh
+
+./prometheus.sh 
+```
+
+<http://localhost:9090/>
